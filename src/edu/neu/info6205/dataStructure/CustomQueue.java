@@ -1,11 +1,13 @@
 package edu.neu.info6205.dataStructure;
 
+import edu.neu.info6205.algo.Request;
+
 public abstract class CustomQueue {
 	
-	public abstract boolean enque(int data);
-	public abstract int deque();
+	public abstract boolean enque(Request data);
+	public abstract Request deque();
 	public abstract boolean isEmpty();
-	public abstract int peek();
+	public abstract Request peek();
 	public abstract int size();
 	
 }

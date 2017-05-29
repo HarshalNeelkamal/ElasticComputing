@@ -1,13 +1,15 @@
 package edu.neu.info6205.dataStructure;
 
-public class LinkedQueue extends CustomQueue{
+import edu.neu.info6205.algo.Request;
+
+public class DispatcherQueue extends CustomQueue{
 
 	//add header and rear
 	CustomLinkedList list = new CustomLinkedList();
 	int count = 0;
 	
 	@Override
-	public boolean enque(int data) {
+	public boolean enque(Request data) {
 		// TODO Auto-generated method stub
 		try{
 			list.add(data);
@@ -19,13 +21,13 @@ public class LinkedQueue extends CustomQueue{
 	}
 
 	@Override
-	public int deque() {
+	public Request deque() {
 		// TODO Auto-generated method stub
 		if(list.head == null){
 			System.out.println("UnderFlow in Linked Stack");
-			return Integer.MAX_VALUE;
+			return null;
 		}else{
-			int ret = list.head.data;
+			Request ret = list.head.data;
 			list.head = list.head.next;
 			count--;
 			return ret;
@@ -39,12 +41,12 @@ public class LinkedQueue extends CustomQueue{
 	}
 
 	@Override
-	public int peek() {
+	public Request peek() {
 		// TODO Auto-generated method stub
 		if(list.head != null){
 			return list.head.data;
 		}
-		return Integer.MAX_VALUE;
+		return null;
 	}
 
 	@Override

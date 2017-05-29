@@ -1,12 +1,14 @@
 package edu.neu.info6205.dataStructure;
 
+import edu.neu.info6205.algo.Request;
+
 public class CustomLinkedList {
 
 	class Node{
-		int data;
+		Request data;
 		Node next;
 		
-		Node(int data, Node next){
+		Node(Request data, Node next){
 			this.data = data;
 			this.next = next;
 		}
@@ -15,7 +17,7 @@ public class CustomLinkedList {
 	Node head = null;
 	Node rear = null;
 	
-	public void add(int data){
+	public void add(Request data){
 		Node n = new Node(data, null);
 		if(head == null){
 			head = n;
@@ -27,8 +29,8 @@ public class CustomLinkedList {
 	}
 	
 	// probably wont be required
-	public int dequeRequest(){
-		int returnableValue = head.data;
+	public Request dequeRequest(){
+		Request returnableValue = head.data;
 		head = head.next;
 		return returnableValue;
 	}

@@ -6,6 +6,12 @@ public class Request
 	int processTime;
 	long requestTime;
 	boolean processsed = false;
+	static int count = 0;
+	
+	public Request(){
+		count ++;
+		requestId = count;
+	}
 	
 	public int getRequestId() 
 	{
