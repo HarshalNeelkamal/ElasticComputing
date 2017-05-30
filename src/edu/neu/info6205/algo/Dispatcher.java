@@ -14,6 +14,11 @@ public class Dispatcher {
 	Timer dispatchTimer = new Timer();
 	
 	private Dispatcher(){
+		System.out.println("Dispatcher Initialised");
+	}
+	
+	public void startDispatching(){
+
 		dispatchTimer.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
@@ -23,6 +28,11 @@ public class Dispatcher {
 					dispatchRequest();
 			}
 		}, 200, dispatchPeriod);
+	
+	}
+	
+	public void stopDispatchingRequests(){
+		dispatchTimer.cancel();
 	}
 	
 	public static Dispatcher getInstance(){
@@ -36,8 +46,11 @@ public class Dispatcher {
 	}
 	
 	public void dispatchRequest(){
-		Request temp = queue.deque();
-		// send temp to service layer
+		if(!queue.isEmpty()){
+			Request temp = queue.deque();
+			// send temp to service layer
+
+		}
 	}
 	
 }

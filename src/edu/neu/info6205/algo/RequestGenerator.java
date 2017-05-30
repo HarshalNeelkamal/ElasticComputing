@@ -14,10 +14,27 @@ public class RequestGenerator{
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				//send out requests to dispatcher
 				Request req = new Request();
-				
+				Dispatcher.getInstance().queueRequest(req);				
+			}
+		}, 0, period);
+	}
+	
+	public void stopGeneratingRequests(){
+		timer.cancel();
+	}
+	
+	public void changeRateTo(int r){
+		int period = 1000/r;
+		
+		timer.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				//send out requests to dispatcher
+				Request req = new Request();
+				Dispatcher.getInstance().queueRequest(req);
 			}
 		}, 0, period);
 	}
