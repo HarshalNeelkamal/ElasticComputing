@@ -25,7 +25,7 @@ public class userInterface {
 	JTextField requestRate_field = new JTextField();
 	JLabel processingTime_label = new JLabel(" Processing Time in ms");
 	JTextField processingTime_field = new JTextField();
-	JPanel innerPanel = new JPanel(new GridLayout(3, 6));
+	JPanel innerPanel = new JPanel(new GridLayout(4, 6));
 	JButton startButton = new JButton("Start Simulation");
 	JPanel lowerPannel = new JPanel(new GridLayout(4, 1));
 	JPanel buttonPanel = new JPanel(new GridLayout(1, 4));
@@ -52,9 +52,10 @@ public class userInterface {
 		requestRate_field.setSize(60, 30);
 		innerPanel.add(requestRate_label);
 		innerPanel.add(requestRate_field);
-		innerPanel.add(new Label());
+		innerPanel.add(changeButton);
 		innerPanel.add(processingTime_label);
 		innerPanel.add(processingTime_field);
+		innerPanel.add(new Label());
 		innerPanel.add(new Label());
 		innerPanel.add(new Label());
 		innerPanel.add(new Label());
@@ -71,6 +72,7 @@ public class userInterface {
 		
 		setActions();
 		
+		changeButton.setEnabled(false);
 		frame.setVisible(true);
 	}
 	
@@ -79,7 +81,7 @@ public class userInterface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				changeButton.setEnabled(true);
 				//trigger the server first
 				Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
 				requestGen.startGeneratingRequestAtRate(Integer.parseInt(requestRate_field.getText()));//requests start getting generated at the very end
@@ -90,10 +92,19 @@ public class userInterface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				changeButton.setEnabled(false);
 				requestGen.stopGeneratingRequests();//top request generator First
 				Dispatcher.getInstance().stopDispatchingRequests();//next goes the dispatcher 
 				//stop the server at the very end
+			}
+		});
+		
+		changeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				requestGen.changeRateTo(Integer.parseInt(requestRate_field.getText()));
+				
 			}
 		});
 	}
