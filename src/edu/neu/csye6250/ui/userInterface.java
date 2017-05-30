@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +19,7 @@ import javax.swing.JTextField;
 import edu.neu.info6205.algo.Dispatcher;
 import edu.neu.info6205.algo.RequestGenerator;
 
-public class userInterface {
+public class userInterface extends Observable{
 
 	JFrame frame = new JFrame("Elastic Computing Simulator");
 	JPanel panel = new JPanel(new GridLayout(3, 1));
@@ -32,8 +34,9 @@ public class userInterface {
 	mainPanelImplementation detailPanel_center = new mainPanelImplementation();
 	JButton changeButton = new JButton("Change");
 	
-	RequestGenerator requestGen = new RequestGenerator();
-	//instanciate server side too 
+	static RequestGenerator requestGen = new RequestGenerator();
+	Thread requestGenerator;// = new Thread(requestGen);
+	//instansiate server side too 
 
 	JButton stopButton = new JButton("Stop Simulation");
 	
@@ -82,9 +85,17 @@ public class userInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				changeButton.setEnabled(true);
+				
+				//test ***********************
+				requestGenerator = null;
+				requestGenerator = new Thread(requestGen);
+				//     ***********************
+				
 				//trigger the server first
 				Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
-				requestGen.startGeneratingRequestAtRate(Integer.parseInt(requestRate_field.getText()));//requests start getting generated at the very end
+				setChanged();
+				notifyObservers(Integer.parseInt(requestRate_field.getText()));
+				requestGenerator.start();
 			}
 		});
 		
@@ -93,7 +104,7 @@ public class userInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				changeButton.setEnabled(false);
-				requestGen.stopGeneratingRequests();//top request generator First
+				requestGen.stopMethod();
 				Dispatcher.getInstance().stopDispatchingRequests();//next goes the dispatcher 
 				//stop the server at the very end
 			}
@@ -103,14 +114,15 @@ public class userInterface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				requestGen.changeRateTo(Integer.parseInt(requestRate_field.getText()));
-				
+				setChanged();
+				notifyObservers(Integer.parseInt(requestRate_field.getText()));
 			}
 		});
 	}
 	
 	public static void main(String[] args){
 		userInterface obj = new userInterface();
+		obj.addObserver(requestGen);
 		obj.run();
 	}
 	

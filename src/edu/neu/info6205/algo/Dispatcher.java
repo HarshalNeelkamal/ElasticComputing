@@ -33,6 +33,8 @@ public class Dispatcher {
 	
 	public void stopDispatchingRequests(){
 		dispatchTimer.cancel();
+		dispatchTimer = null;
+		dispatchTimer = new Timer();
 	}
 	
 	public static Dispatcher getInstance(){
