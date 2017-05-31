@@ -2,13 +2,15 @@ package edu.neu.info6205.algo;
 
 public class Request 
 {
-	int requestId;
-	int processTime;
-	long requestTime;
-	boolean processsed = false;
-	static int count = 0;
+	private int requestId;
+	private int processTime;
+	private long requestTime;
+	private boolean processsed = false;
+	private VirtualMachine vm;
+	private static int count = 0; 
 	
-	public Request(){
+	public Request()
+	{
 		count ++;
 		requestId = count;
 	}
@@ -32,14 +34,14 @@ public class Request
 	{
 		this.processTime = processTime;
 	}
-	
-	
 
-	public long getRequestTime() {
+	public long getRequestTime() 
+	{
 		return requestTime;
 	}
 
-	public void setRequestTime(long requestTime) {
+	public void setRequestTime(long requestTime) 
+	{
 		this.requestTime = requestTime;
 	}
 
@@ -51,5 +53,20 @@ public class Request
 	public void setProcesssed(boolean processsed) 
 	{
 		this.processsed = processsed;
+	}
+
+	public VirtualMachine getVm() 
+	{
+		return vm;
+	}
+
+	public void setVm(VirtualMachine vm) 
+	{
+		this.vm = vm;
+	}
+
+	public static int getCount() 
+	{
+		return count;
 	}
 }
