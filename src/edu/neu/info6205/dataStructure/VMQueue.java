@@ -2,7 +2,7 @@ package edu.neu.info6205.dataStructure;
 
 import edu.neu.info6205.algo.Request;
 
-public class CircularQueue extends CustomQueue{
+public class VMQueue extends CustomQueue{
 
 	//create header and rear as integer pointers and array for queue implementation 
 	int header = 0;
@@ -11,8 +11,8 @@ public class CircularQueue extends CustomQueue{
 	Request queue[] = new Request[50]; 
 	
 	@Override
-	public boolean enque(Request data) {
-		// TODO Auto-generated method stub
+	public boolean enque(Request data) 
+	{
 		if((rear+1) % queue.length != header){
 			count++;
 			rear = (rear+1) % queue.length;
@@ -25,8 +25,8 @@ public class CircularQueue extends CustomQueue{
 	}
 
 	@Override
-	public Request deque() {
-		// TODO Auto-generated method stub
+	public Request deque() 
+	{
 		if(header == rear){
 			System.out.println("UnderFlow");
 			return null;
@@ -38,8 +38,8 @@ public class CircularQueue extends CustomQueue{
 	}
 
 	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+	public boolean isEmpty() 
+	{
 		return (header == rear);
 	}
 
@@ -49,9 +49,14 @@ public class CircularQueue extends CustomQueue{
 	}
 
 	@Override
-	public int size() {
-		// TODO Auto-generated method stub
+	public int size() 
+	{
 		return count;
+	}
+	
+	public boolean isFull()
+	{
+		return false;
 	}
 
 }
