@@ -8,7 +8,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -70,7 +69,7 @@ public class userInterface extends Observable{
 		lowerPannel.add(new Label());
 		lowerPannel.add(buttonPanel);
 		panel.add(innerPanel, 0);
-		panel.add(detailPanel_center,1);
+		panel.add(detailPanel_center.panel,1);
 		panel.add(lowerPannel, 2);
 		
 		setActions();
@@ -124,6 +123,14 @@ public class userInterface extends Observable{
 		userInterface obj = new userInterface();
 		obj.addObserver(requestGen);
 		obj.run();
+	}
+
+	public void detail(){
+		int noOfservers = 0;// get no of servers in use
+		int reqInQueue = Dispatcher.getInstance().queue.size();
+		int inProc = 0;//get requests in proccess
+		int proc = 0;//get proccesed requests
+		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc);
 	}
 	
 }

@@ -11,23 +11,29 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class mainPanelImplementation extends JPanel{
+public class mainPanelImplementation {
 
-	public void paint(Graphics g){
-		suceedPaint(g);
+	JPanel panel = new JPanel(new GridLayout(5, 1));
+	
+	JLabel serverCountLabel = new JLabel(" No of Servers in Use: N/A");
+	JLabel requestsQueueLabel = new JLabel(" No of requests in Queue: N/A");
+	JLabel totalDisapatchesLabel = new JLabel(" No of requests in Proccess: N/A");
+	JLabel totalProcessedLabel = new JLabel(" Processed Requests: N/A");
+
+	
+	public mainPanelImplementation(){
+		panel.setBackground(Color.WHITE);
+		panel.add(serverCountLabel);
+		panel.add(requestsQueueLabel);
+		panel.add(totalDisapatchesLabel);
+		panel.add(totalProcessedLabel);
 	}
 	
-	private void suceedPaint(Graphics g){
-		Graphics2D  g2d = (Graphics2D) g;
-		setLayout(new GridLayout(6, 2));
-		Dimension size = getSize();
-		System.out.println(size.width+":"+size.height);
-		g2d.setColor(Color.ORANGE);
-		//g2d.fillRect(0, 0, size.width, size.height);
-		g2d.setColor(Color.BLACK);
-		JLabel l = new JLabel("no details available yet");
-		JButton b = new JButton("trst");
-		this.add(l);
+	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq){
+		serverCountLabel.setText(" No of Servers in Use: "+ serCount);
+		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
+		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);
+		totalProcessedLabel.setText(" Processed Requests: "+ procReq);
 	}
 	
 }
