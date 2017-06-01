@@ -3,7 +3,7 @@ package edu.neu.info6205.algo;
 public class Request 
 {
 	private int requestId;
-	private int processTime;
+	private int processTime = 2000;
 	private long requestTime;
 	private boolean processsed = false;
 	private VirtualMachine vm;

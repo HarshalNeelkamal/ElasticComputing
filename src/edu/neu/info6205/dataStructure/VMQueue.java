@@ -45,7 +45,10 @@ public class VMQueue extends CustomQueue{
 
 	@Override
 	public Request peek() {
-		return queue[header+1];
+		if(header != rear)
+			return queue[(header + 1)%queue.length];
+		else 
+			return null;
 	}
 
 	@Override
@@ -56,7 +59,7 @@ public class VMQueue extends CustomQueue{
 	
 	public boolean isFull()
 	{
-		return false;
+		return (rear+1) % queue.length == header;
 	}
 
 }

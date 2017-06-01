@@ -30,7 +30,7 @@ public class mainPanelImplementation {
 	}
 	
 	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq){
-		serverCountLabel.setText(" No of Servers in Use: "+ serCount);
+		serverCountLabel.setText(" No of Servers in Use: "+ serCount+"/5");
 		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
 		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);
 		totalProcessedLabel.setText(" Processed Requests: "+ procReq);
