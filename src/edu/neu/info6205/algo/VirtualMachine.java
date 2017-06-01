@@ -7,10 +7,10 @@ import edu.neu.info6205.dataStructure.VMQueue;
 
 public class VirtualMachine implements Runnable
 {
-	private VMQueue vmQueue;
+	private synchronized VMQueue vmQueue;
 	private boolean employed;
 	private Timer timer;
-	
+	 
 	public VirtualMachine() 
 	{
 		vmQueue = new VMQueue();
