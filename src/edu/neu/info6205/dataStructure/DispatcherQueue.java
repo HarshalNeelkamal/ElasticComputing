@@ -2,39 +2,31 @@ package edu.neu.info6205.dataStructure;
 
 import edu.neu.info6205.algo.Request;
 
-public class DispatcherQueue extends CustomQueue
-{
+public class DispatcherQueue extends CustomQueue{
+
 	//add header and rear
 	CustomLinkedList list = new CustomLinkedList();
 	int count = 0;
 	
 	@Override
-	public boolean enque(Request data) 
-	{
-		try
-		{
+	public boolean enque(Request data) {
+		// TODO Auto-generated method stub
+		try{
 			list.add(data);
 			count++;
-		}
-		
-		catch(Exception e)
-		{
+		}catch(Exception e){
 			return false;
 		}
-		
 		return true;
 	}
 
 	@Override
-	public Request deque() 
-	{
-		if(list.head == null)
-		{
+	public Request deque() {
+		// TODO Auto-generated method stub
+		if(list.head == null){
 			System.out.println("UnderFlow in Linked Stack");
 			return null;
-		}
-		else
-		{
+		}else{
 			Request ret = list.head.data;
 			list.head = list.head.next;
 			count--;
@@ -43,24 +35,24 @@ public class DispatcherQueue extends CustomQueue
 	}
 
 	@Override
-	public boolean isEmpty() 
-	{
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
 		return (list.head == null);
 	}
 
 	@Override
-	public Request peek() 
-	{
-		if(list.head != null)
-		{
+	public Request peek() {
+		// TODO Auto-generated method stub
+		if(list.head != null){
 			return list.head.data;
 		}
 		return null;
 	}
 
 	@Override
-	public int size() 
-	{
+	public int size() {
+		// TODO Auto-generated method stub
 		return count;
 	}
+
 }
