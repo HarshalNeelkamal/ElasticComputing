@@ -11,7 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class mainPanelImplementation {
+public class mainPanelImplementation 
+{
 
 	JPanel panel = new JPanel(new GridLayout(5, 1));
 	
@@ -21,7 +22,8 @@ public class mainPanelImplementation {
 	JLabel totalProcessedLabel = new JLabel(" Processed Requests: N/A");
 
 	
-	public mainPanelImplementation(){
+	public mainPanelImplementation()
+	{
 		panel.setBackground(Color.WHITE);
 		panel.add(serverCountLabel);
 		panel.add(requestsQueueLabel);
@@ -29,7 +31,8 @@ public class mainPanelImplementation {
 		panel.add(totalProcessedLabel);
 	}
 	
-	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq){
+	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq, int[] serverSizes)
+	{
 		serverCountLabel.setText(" No of Servers in Use: "+ serCount+"/5");
 		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
 		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);

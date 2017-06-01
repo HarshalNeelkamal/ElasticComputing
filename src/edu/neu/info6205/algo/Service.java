@@ -5,42 +5,56 @@ public class Service
 	private static Service service;
 	private static VirtualMachine[] machines = new VirtualMachine[5];
 	private static Thread[] threads = new Thread[machines.length];
+	private static int[] serverSizes = {0,0,0,0,0};
 	private int inProcCount = 0;
 	private int processedCount = 0;
 	private int serversInProccess = 0;
 	private int proccessTime = 0;
 	
 	
-	public int getProccessTime() {
+	public int getProccessTime() 
+	{
 		return proccessTime;
 	}
 
-	public void setProccessTime(int proccessTime) {
+	public void setProccessTime(int proccessTime) 
+	{
 		this.proccessTime = proccessTime;
 	}
 
-	public int getServersInProccess() {
+	public int getServersInProccess() 
+	{
 		return serversInProccess;
 	}
 
-	public void setServersInProccess(int serversInProccess) {
+	public void setServersInProccess(int serversInProccess) 
+	{
 		this.serversInProccess = serversInProccess;
 	}
 
-	public int getProcessedCount() {
+	public int getProcessedCount() 
+	{
 		return processedCount;
 	}
 
-	public void setProcessedCount(int processedCount) {
+	public void setProcessedCount(int processedCount) 
+	{
 		this.processedCount = processedCount;
 	}
 
-	public int getInProcCount() {
+	public int getInProcCount() 
+	{
 		return inProcCount;
 	}
 
-	public void setInProcCount(int inProcCount) {
+	public void setInProcCount(int inProcCount) 
+	{
 		this.inProcCount = inProcCount;
+	}
+	
+	public int[] getServerSizes() 
+	{
+		return serverSizes;
 	}
 
 	private Service() 
@@ -58,7 +72,8 @@ public class Service
 		return service;
 	}
 
-	public VirtualMachine availableVM(){
+	public VirtualMachine availableVM()
+	{
 		if(!machines[0].isEmployed())
 		{
 			System.out.println(">>>>>>>>>>first machine employed");
@@ -66,17 +81,23 @@ public class Service
 			employVM(machines[0]);
 			threads[0] = new Thread(machines[0]);
 			threads[0].start();
+			serverSizes[0]++;
 			return machines[0];
-		}else if(!(machines[0].getVmQueue()).isFull()){
+		}
+		else if(!(machines[0].getVmQueue()).isFull())
+		{
 			inProcCount++;
+			serverSizes[0]++;
 			return machines[0];
 		}
 		for(int i = 1; i < machines.length; i++)
 		{
 			if(machines[i].isEmployed())
 				{
-					if(!((machines[i].getVmQueue()).isFull())){
+					if(!((machines[i].getVmQueue()).isFull()))
+					{
 						inProcCount++;
+						serverSizes[i]++;
 						return machines[i];
 					}
 				}
@@ -87,6 +108,7 @@ public class Service
 					employVM(machines[i]);
 					threads[i] = new Thread(machines[i]);
 					threads[i].start();
+					serverSizes[i]++;
 					return machines[i];
 				}					
 		}
@@ -110,7 +132,8 @@ public class Service
 	
 	public void releaseVM(VirtualMachine vm)
 	{
-		if(serversInProccess > 1){
+		if(serversInProccess > 1)
+		{
 			serversInProccess--;
 			vm.setEmployed(false);
 		}

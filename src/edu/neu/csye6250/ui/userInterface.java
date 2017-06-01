@@ -22,7 +22,8 @@ import edu.neu.info6205.algo.Dispatcher;
 import edu.neu.info6205.algo.RequestGenerator;
 import edu.neu.info6205.algo.Service;
 
-public class userInterface extends Observable{
+public class userInterface extends Observable
+{
 
 	JFrame frame = new JFrame("Elastic Computing Simulator");
 	JPanel panel = new JPanel(new GridLayout(3, 1));
@@ -38,7 +39,7 @@ public class userInterface extends Observable{
 	JButton changeButton = new JButton("Change");
 	
 	static RequestGenerator requestGen = new RequestGenerator();
-	Thread requestGenerator;// = new Thread(requestGen);
+	Thread generatorThread;// = new Thread(requestGen);
 	//instansiate server side too 
 
 	JButton stopButton = new JButton("Stop Simulation");
@@ -88,13 +89,14 @@ public class userInterface extends Observable{
 		startButton.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				changeButton.setEnabled(true);
 				
 				//test ***********************
 				
-				requestGenerator = null;
-				requestGenerator = new Thread(requestGen);
+				generatorThread = null;
+				generatorThread = new Thread(requestGen);
 				//     ***********************
 				
 				//trigger the server first
@@ -102,15 +104,15 @@ public class userInterface extends Observable{
 				setChanged();
 				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
 				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
-				requestGenerator.start();
+				generatorThread.start();
 				startDetailTimer();
 			}
 		});
 		
 		stopButton.addActionListener(new ActionListener() {
-			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				changeButton.setEnabled(false);
 				requestGen.stopMethod();
 				Dispatcher.getInstance().stopDispatchingRequests();//next goes the dispatcher 
@@ -120,10 +122,10 @@ public class userInterface extends Observable{
 			}
 		});
 		
-		changeButton.addActionListener(new ActionListener() {
-			
+		changeButton.addActionListener(new ActionListener() {			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				setChanged();
 				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
 				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
@@ -131,35 +133,40 @@ public class userInterface extends Observable{
 		});
 	}
 	
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 		userInterface obj = new userInterface();
 		obj.addObserver(requestGen);
 		obj.run();
 	}
 	
-	public void startDetailTimer(){
+	public void startDetailTimer()
+	{
 		timer = new Timer();
-		timer.schedule(new TimerTask() {
-			
+		timer.schedule(new TimerTask() 
+		{	
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
+			public void run() 
+			{
 				detail();
 			}
 		}, 500, 500);
 	}
 	
-	public void endDetailTimer(){
+	public void endDetailTimer()
+	{
 		timer.cancel();
 		timer = null;
 	}
 
-	synchronized public void detail(){
+	synchronized public void detail()
+	{
 		int noOfservers = Service.getInstance().getServersInProccess();// get no of servers in use
 		int reqInQueue = Dispatcher.getInstance().queue.size();
 		int inProc = Service.getInstance().getInProcCount();//get requests in proccess
 		int proc = Service.getInstance().getProcessedCount();//get proccesed requests
-		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc);
+		int[] serverSizes = Service.getInstance().getServerSizes();
+		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc, serverSizes);
 	}
 	
 }

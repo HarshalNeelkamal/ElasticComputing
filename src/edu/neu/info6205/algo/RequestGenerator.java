@@ -16,6 +16,7 @@ public class RequestGenerator implements Runnable, Observer{
 	
 	@Override
 	public void run() {
+		// Check why initialized twice
 		stop = false;
 		while(!stop){
 			if(!pause){
