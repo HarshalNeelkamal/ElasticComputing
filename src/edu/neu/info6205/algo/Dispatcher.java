@@ -10,7 +10,7 @@ public class Dispatcher {
 	//Singleton
 	static Dispatcher instance = null;
 	public static DispatcherQueue queue = new DispatcherQueue();
-	int dispatchPeriod = 200; //despatch period is 200ms
+	int dispatchPeriod = 2; //despatch period is 200ms
 	Timer dispatchTimer = new Timer();
 	
 	private Dispatcher(){

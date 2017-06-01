@@ -159,7 +159,8 @@ public class userInterface extends Observable{
 		int reqInQueue = Dispatcher.getInstance().queue.size();
 		int inProc = Service.getInstance().getInProcCount();//get requests in proccess
 		int proc = Service.getInstance().getProcessedCount();//get proccesed requests
-		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc);
+		long avgProcTime = Service.getInstance().getAvgProccessTime(); 
+		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc, avgProcTime);
 	}
 	
 }
