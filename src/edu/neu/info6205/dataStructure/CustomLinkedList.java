@@ -17,7 +17,8 @@ public class CustomLinkedList {
 	Node head = null;
 	Node rear = null;
 	
-	public void add(Request data){
+	public void add(Request data)
+	{
 		Node n = new Node(data, null);
 		if(head == null){
 			head = n;
