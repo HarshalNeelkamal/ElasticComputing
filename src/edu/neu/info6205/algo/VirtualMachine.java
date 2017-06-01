@@ -52,7 +52,7 @@ public class VirtualMachine implements Runnable
 //			}
 //		}, 0, request.getProcessTime());
 		try {
-			Thread.sleep(request.getProcessTime());
+			Thread.sleep(Service.getInstance().getProccessTime());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,8 +8,17 @@ public class Service
 	private int inProcCount = 0;
 	private int processedCount = 0;
 	private int serversInProccess = 0;
+	private int proccessTime = 0;
 	
 	
+	public int getProccessTime() {
+		return proccessTime;
+	}
+
+	public void setProccessTime(int proccessTime) {
+		this.proccessTime = proccessTime;
+	}
+
 	public int getServersInProccess() {
 		return serversInProccess;
 	}
@@ -89,6 +98,14 @@ public class Service
 	{
 		vm.setEmployed(true);
 		serversInProccess++;
+	}
+	
+	public void cleareQueues(){
+		for(int i= 0; i<machines.length;i++){
+			VirtualMachine m = machines[i];
+			m.getVmQueue().cleare();
+			m = null;
+		}
 	}
 	
 	public void releaseVM(VirtualMachine vm)
