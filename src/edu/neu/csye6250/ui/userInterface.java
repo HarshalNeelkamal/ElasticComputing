@@ -101,6 +101,7 @@ public class userInterface extends Observable{
 				Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
 				setChanged();
 				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
+				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
 				requestGenerator.start();
 				startDetailTimer();
 			}
@@ -115,6 +116,7 @@ public class userInterface extends Observable{
 				Dispatcher.getInstance().stopDispatchingRequests();//next goes the dispatcher 
 				//stop the server at the very end
 				endDetailTimer();
+				Service.getInstance().cleareQueues();
 			}
 		});
 		
@@ -124,6 +126,7 @@ public class userInterface extends Observable{
 			public void actionPerformed(ActionEvent e) {
 				setChanged();
 				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
+				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
 			}
 		});
 	}

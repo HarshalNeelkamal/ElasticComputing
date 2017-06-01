@@ -62,4 +62,9 @@ public class VMQueue extends CustomQueue{
 		return (rear+1) % queue.length == header;
 	}
 
+	public void cleare(){
+		header = 0;
+		rear = 0;
+		count = 0;
+	}
 }
