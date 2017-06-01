@@ -8,7 +8,10 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.management.Descriptor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +20,7 @@ import javax.swing.JTextField;
 
 import edu.neu.info6205.algo.Dispatcher;
 import edu.neu.info6205.algo.RequestGenerator;
+import edu.neu.info6205.algo.Service;
 
 public class userInterface extends Observable{
 
@@ -38,6 +42,8 @@ public class userInterface extends Observable{
 	//instansiate server side too 
 
 	JButton stopButton = new JButton("Stop Simulation");
+	
+	Timer timer;
 	
 	userInterface(){
 		System.out.println("Initailized");
@@ -86,6 +92,7 @@ public class userInterface extends Observable{
 				changeButton.setEnabled(true);
 				
 				//test ***********************
+				
 				requestGenerator = null;
 				requestGenerator = new Thread(requestGen);
 				//     ***********************
@@ -93,8 +100,9 @@ public class userInterface extends Observable{
 				//trigger the server first
 				Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
 				setChanged();
-				notifyObservers(Integer.parseInt(requestRate_field.getText()));
+				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
 				requestGenerator.start();
+				startDetailTimer();
 			}
 		});
 		
@@ -106,6 +114,7 @@ public class userInterface extends Observable{
 				requestGen.stopMethod();
 				Dispatcher.getInstance().stopDispatchingRequests();//next goes the dispatcher 
 				//stop the server at the very end
+				endDetailTimer();
 			}
 		});
 		
@@ -114,7 +123,7 @@ public class userInterface extends Observable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setChanged();
-				notifyObservers(Integer.parseInt(requestRate_field.getText()));
+				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
 			}
 		});
 	}
@@ -124,12 +133,29 @@ public class userInterface extends Observable{
 		obj.addObserver(requestGen);
 		obj.run();
 	}
+	
+	public void startDetailTimer(){
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				detail();
+			}
+		}, 500, 500);
+	}
+	
+	public void endDetailTimer(){
+		timer.cancel();
+		timer = null;
+	}
 
-	public void detail(){
-		int noOfservers = 0;// get no of servers in use
+	synchronized public void detail(){
+		int noOfservers = Service.getInstance().getServersInProccess();// get no of servers in use
 		int reqInQueue = Dispatcher.getInstance().queue.size();
-		int inProc = 0;//get requests in proccess
-		int proc = 0;//get proccesed requests
+		int inProc = Service.getInstance().getInProcCount();//get requests in proccess
+		int proc = Service.getInstance().getProcessedCount();//get proccesed requests
 		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc);
 	}
 	

@@ -24,8 +24,10 @@ public class Dispatcher {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if(!queue.isEmpty())
+				if(!queue.isEmpty()){
+					System.out.println("dispatched");
 					dispatchRequest();
+				}
 			}
 		}, 200, dispatchPeriod);
 	
@@ -49,9 +51,15 @@ public class Dispatcher {
 	
 	public void dispatchRequest(){
 		if(!queue.isEmpty()){
-			Request temp = queue.deque();
-			// send temp to service layer
-
+			VirtualMachine vm = Service.getInstance().availableVM();
+			if(vm == null){
+				System.out.println("VM's are full");
+			}else{
+				Request temp = queue.deque();
+				temp.setVm(vm);
+				vm.getVmQueue().enque(temp);
+				// send temp to service layer
+			}
 		}
 	}
 	

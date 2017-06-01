@@ -7,10 +7,11 @@ import edu.neu.info6205.dataStructure.VMQueue;
 
 public class VirtualMachine implements Runnable
 {
-	private synchronized VMQueue vmQueue;
+	private VMQueue vmQueue;
 	private boolean employed;
 	private Timer timer;
-	 
+	
+	
 	public VirtualMachine() 
 	{
 		vmQueue = new VMQueue();
@@ -18,7 +19,7 @@ public class VirtualMachine implements Runnable
 		employed = false;
 	}
 
-	public VMQueue getVmQueue() 
+	synchronized public VMQueue getVmQueue() 
 	{
 		return vmQueue;
 	}
@@ -28,7 +29,7 @@ public class VirtualMachine implements Runnable
 		this.vmQueue = vmQueue;
 	}
 
-	public boolean isEmployed() 
+	synchronized public boolean isEmployed() 
 	{
 		return employed;
 	}
@@ -42,15 +43,21 @@ public class VirtualMachine implements Runnable
 	{
 		//process request for some time
 		
-		timer.schedule(new TimerTask() 
-		{
-			
-			@Override
-			public void run() 
-			{
-				
-			}
-		}, 200, request.getProcessTime());
+//		timer.schedule(new TimerTask() 
+//		{
+//			
+//			@Override
+//			public void run() 
+//			{
+//				
+//			}
+//		}, 0, request.getProcessTime());
+		try {
+			Thread.sleep(request.getProcessTime());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setProcesssed(true);
 		releaseRequest(request);
 	}
@@ -59,8 +66,12 @@ public class VirtualMachine implements Runnable
 	{
 		Request r = request.getVm().getVmQueue().deque();
 		Service service = Service.getInstance();
-		if(request.getVm().getVmQueue().isEmpty())
+		service.setInProcCount(service.getInProcCount()-1);
+		service.setProcessedCount(service.getProcessedCount() + 1);
+		System.out.println("size: "+ request.getVm().getVmQueue().size());
+		if(request.getVm().getVmQueue().isEmpty()){
 			service.releaseVM(request.getVm());
+		}
 	}
 
 	@Override
@@ -68,8 +79,13 @@ public class VirtualMachine implements Runnable
 	{
 		while (isEmployed())
 		{
-			Request request = getVmQueue().peek();
-			processCurrentRequest(request);
+			if(getVmQueue().isEmpty()){
+
+			}else{
+				Request request = getVmQueue().peek();
+				if(request != null)
+					processCurrentRequest(request);
+			}
 		}
 	}
 }
