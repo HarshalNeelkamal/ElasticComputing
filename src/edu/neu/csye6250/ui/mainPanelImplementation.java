@@ -37,7 +37,7 @@ public class mainPanelImplementation {
 		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
 		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);
 		totalProcessedLabel.setText(" Processed Requests: "+ procReq);
-		avgProcTimeLabel.setText(" Avg Processing Time: "+ avgProcTime);
+		avgProcTimeLabel.setText(" Avg Processing Time: "+ avgProcTime +" ms");
 	}
 	
 }
