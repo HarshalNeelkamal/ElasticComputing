@@ -166,7 +166,8 @@ public class userInterface extends Observable
 		int inProc = Service.getInstance().getInProcCount();//get requests in proccess
 		int proc = Service.getInstance().getProcessedCount();//get proccesed requests
 		int[] serverSizes = Service.getInstance().getServerSizes();
-		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc, serverSizes);
+		long avgProcTime = Service.getInstance().getAvgProccessTime(); 
+		detailPanel_center.updateDetails(noOfservers, reqInQueue, inProc, proc, avgProcTime, serverSizes);
 	}
 	
 }

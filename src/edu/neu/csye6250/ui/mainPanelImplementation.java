@@ -20,6 +20,7 @@ public class mainPanelImplementation
 	JLabel requestsQueueLabel = new JLabel(" No of requests in Queue: N/A");
 	JLabel totalDisapatchesLabel = new JLabel(" No of requests in Proccess: N/A");
 	JLabel totalProcessedLabel = new JLabel(" Processed Requests: N/A");
+	JLabel avgProcTimeLabel = new JLabel(" Avg Processing Time: N/A");
 
 	
 	public mainPanelImplementation()
@@ -29,14 +30,17 @@ public class mainPanelImplementation
 		panel.add(requestsQueueLabel);
 		panel.add(totalDisapatchesLabel);
 		panel.add(totalProcessedLabel);
+		panel.add(avgProcTimeLabel);
+
 	}
 	
-	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq, int[] serverSizes)
-	{
+
+	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq, long avgProcTime, int[] serverSizes){
 		serverCountLabel.setText(" No of Servers in Use: "+ serCount+"/5");
 		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
 		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);
 		totalProcessedLabel.setText(" Processed Requests: "+ procReq);
+		avgProcTimeLabel.setText(" Avg Processing Time: "+ avgProcTime);
 	}
 	
 }

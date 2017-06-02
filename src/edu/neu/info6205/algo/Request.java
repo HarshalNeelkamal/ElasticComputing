@@ -13,6 +13,7 @@ public class Request
 	{
 		count ++;
 		requestId = count;
+		requestTime = System.currentTimeMillis();
 	}
 	
 	public int getRequestId() 
