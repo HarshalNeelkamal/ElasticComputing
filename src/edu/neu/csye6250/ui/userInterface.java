@@ -15,6 +15,7 @@ import javax.management.Descriptor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,7 +32,7 @@ public class userInterface extends Observable
 	JTextField requestRate_field = new JTextField();
 	JLabel processingTime_label = new JLabel(" Processing Time in ms");
 	JTextField processingTime_field = new JTextField();
-	JPanel innerPanel = new JPanel(new GridLayout(4, 6));
+	JPanel innerPanel = new JPanel(new GridLayout(5, 6));
 	JButton startButton = new JButton("Start Simulation");
 	JPanel lowerPannel = new JPanel(new GridLayout(4, 1));
 	JPanel buttonPanel = new JPanel(new GridLayout(1, 4));
@@ -61,13 +62,15 @@ public class userInterface extends Observable
 		requestRate_field.setSize(60, 30);
 		innerPanel.add(requestRate_label);
 		innerPanel.add(requestRate_field);
-		innerPanel.add(changeButton);
+		innerPanel.add(new Label());
 		innerPanel.add(processingTime_label);
 		innerPanel.add(processingTime_field);
 		innerPanel.add(new Label());
 		innerPanel.add(new Label());
 		innerPanel.add(new Label());
 		innerPanel.add(new Label());
+		innerPanel.add(new Label());
+		innerPanel.add(changeButton);
 
 		buttonPanel.add(new Label());
 		buttonPanel.add(startButton);
@@ -91,21 +94,41 @@ public class userInterface extends Observable
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				changeButton.setEnabled(true);
 				
-				//test ***********************
 				
-				generatorThread = null;
-				generatorThread = new Thread(requestGen);
-				//     ***********************
 				
-				//trigger the server first
-				Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
-				setChanged();
-				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
-				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
-				generatorThread.start();
-				startDetailTimer();
+				if( processingTime_field.getText().equals("") |  requestRate_field.getText().equals("")){
+					JOptionPane.showMessageDialog(frame, "Fields should not be empty");
+				}else{
+					try{
+						if(Integer.parseInt(processingTime_field.getText()) <0){
+							JOptionPane.showMessageDialog(frame, "Proccessing time should be a non negative no.");
+						}else if(Integer.parseInt(requestRate_field.getText()) < 0){
+							JOptionPane.showMessageDialog(frame, "Reguest generation rate should be a non negative no.");
+						}else{
+							changeButton.setEnabled(true);
+							
+							//test ***********************
+							
+							generatorThread = null;
+							generatorThread = new Thread(requestGen);
+							//     ***********************
+							
+							//trigger the server first
+							Dispatcher.getInstance().startDispatching();//next goes the dispatcher 
+							setChanged();
+							notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
+							Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
+							generatorThread.start();
+							startDetailTimer();
+						}
+					}catch(NumberFormatException excep){
+						JOptionPane.showMessageDialog(frame, "Fields should comntain numerics");
+					}
+				}
+					
+					
+				
 			}
 		});
 		
@@ -126,9 +149,23 @@ public class userInterface extends Observable
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				setChanged();
-				notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
-				Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
+				if( processingTime_field.getText().equals("") |  requestRate_field.getText().equals("")){
+					JOptionPane.showMessageDialog(frame, "Fields should not be empty");
+				}else{
+					try{
+						if(Integer.parseInt(processingTime_field.getText()) <0){
+							JOptionPane.showMessageDialog(frame, "Proccessing time should be a non negative no.");
+						}else if(Integer.parseInt(requestRate_field.getText()) < 0){
+							JOptionPane.showMessageDialog(frame, "Reguest generation rate should be a non negative no.");
+						}else{
+							setChanged();
+							notifyObservers((requestRate_field.getText()+" "+processingTime_field.getText()));
+							Service.getInstance().setProccessTime(Integer.parseInt(processingTime_field.getText()));
+						}
+					}catch(NumberFormatException excep){
+						JOptionPane.showMessageDialog(frame, "Fields should comntain numerics");
+					}
+				}				
 			}
 		});
 	}
