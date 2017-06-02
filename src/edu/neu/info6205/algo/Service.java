@@ -5,7 +5,7 @@ public class Service
 	private static Service service;
 	private static VirtualMachine[] machines = new VirtualMachine[5];
 	private static Thread[] threads = new Thread[machines.length];
-	private static int[] serverSizes = {0,0,0,0,0};
+	private static int[] serverSizes = new int[machines.length];
 	private int inProcCount = 0;
 	private int processedCount = 0;
 	private int serversInProccess = 0;
@@ -13,20 +13,38 @@ public class Service
 	private long AvgProccessTimeStorage = 0;//holds a total time of previous 100 requests that got proccessed 
 	private long AvgProccessTime = 0;
 	
+	private Service() 
+	{	
+		for (int i = 0; i < machines.length; i++)
+			{
+				machines[i] = new VirtualMachine();
+			}
+	}
 	
-	public long getAvgProccessTimeStorage() {
+	public static Service getInstance() 
+	{
+		if(service == null)
+			service = new Service();
+		return service;
+	}
+	
+	public long getAvgProccessTimeStorage() 
+	{
 		return AvgProccessTimeStorage;
 	}
 
-	public void setAvgProccessTimeStorage(long avgProccessTimeStorage) {
+	public void setAvgProccessTimeStorage(long avgProccessTimeStorage) 
+	{
 		AvgProccessTimeStorage = avgProccessTimeStorage;
 	}
 
-	public long getAvgProccessTime() {
+	public long getAvgProccessTime()
+	{
 		return AvgProccessTime;
 	}
 
-	public void setAvgProccessTime(long avgProccessTime) {
+	public void setAvgProccessTime(long avgProccessTime) 
+	{
 		AvgProccessTime = avgProccessTime;
 	}
 
@@ -71,22 +89,12 @@ public class Service
 	
 	public int[] getServerSizes() 
 	{
+		for (int i = 0; i<machines.length; i++)
+		{
+			serverSizes[i] = machines[i].getVmQueue().size();
+		}
+		
 		return serverSizes;
-	}
-
-	private Service() 
-	{	
-		for (int i = 0; i < machines.length; i++)
-			{
-				machines[i] = new VirtualMachine();
-			}
-	}
-	
-	public static Service getInstance() 
-	{
-		if(service == null)
-			service = new Service();
-		return service;
 	}
 
 	public VirtualMachine availableVM()
@@ -98,13 +106,11 @@ public class Service
 			employVM(machines[0]);
 			threads[0] = new Thread(machines[0]);
 			threads[0].start();
-			serverSizes[0]++;
 			return machines[0];
 		}
 		else if(!(machines[0].getVmQueue()).isFull())
 		{
 			inProcCount++;
-			serverSizes[0]++;
 			return machines[0];
 		}
 		for(int i = 1; i < machines.length; i++)
@@ -114,7 +120,6 @@ public class Service
 					if(!((machines[i].getVmQueue()).isFull()))
 					{
 						inProcCount++;
-						serverSizes[i]++;
 						return machines[i];
 					}
 				}
@@ -125,7 +130,6 @@ public class Service
 					employVM(machines[i]);
 					threads[i] = new Thread(machines[i]);
 					threads[i].start();
-					serverSizes[i]++;
 					return machines[i];
 				}					
 		}
