@@ -63,6 +63,7 @@ public class mainPanelImplementation
 		server3Processing.setText(" Requests at Server 3: "+ serverSizes[2]);
 		server4Processing.setText(" Requests at Server 4: "+ serverSizes[3]);
 		server5Processing.setText(" Requests at Server 5: "+ serverSizes[4]);
+		avgProcTimeLabel.setText(" Avg Processing Time: "+ avgProcTime +" ms/request");
 	}
 	
 }

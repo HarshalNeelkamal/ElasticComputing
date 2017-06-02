@@ -29,7 +29,7 @@ public class Dispatcher {
 					dispatchRequest();
 				}
 			}
-		}, 200, dispatchPeriod);
+		}, dispatchPeriod, dispatchPeriod);
 	
 	}
 	
