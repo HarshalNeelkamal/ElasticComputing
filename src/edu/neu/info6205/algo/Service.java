@@ -10,10 +10,27 @@ public class Service
 	private int processedCount = 0;
 	private int serversInProccess = 0;
 	private int proccessTime = 0;
+	private long AvgProccessTimeStorage = 0;//holds a total time of previous 100 requests that got proccessed 
+	private long AvgProccessTime = 0;
 	
 	
-	public int getProccessTime() 
-	{
+	public long getAvgProccessTimeStorage() {
+		return AvgProccessTimeStorage;
+	}
+
+	public void setAvgProccessTimeStorage(long avgProccessTimeStorage) {
+		AvgProccessTimeStorage = avgProccessTimeStorage;
+	}
+
+	public long getAvgProccessTime() {
+		return AvgProccessTime;
+	}
+
+	public void setAvgProccessTime(long avgProccessTime) {
+		AvgProccessTime = avgProccessTime;
+	}
+
+	public int getProccessTime() {
 		return proccessTime;
 	}
 
