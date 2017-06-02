@@ -30,6 +30,8 @@ public class DispatcherQueue extends CustomQueue{
 			Request ret = list.head.data;
 			list.head = list.head.next;
 			count--;
+			if(count < 0)
+				count = 0;
 			return ret;
 		}
 	}
@@ -53,6 +55,11 @@ public class DispatcherQueue extends CustomQueue{
 	public int size() {
 		// TODO Auto-generated method stub
 		return count;
+	}
+	
+	public void cleareQueue(){
+		list.head = null;
+		list.rear = null;
 	}
 
 }

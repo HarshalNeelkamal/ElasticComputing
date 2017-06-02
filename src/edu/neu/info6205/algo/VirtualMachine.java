@@ -36,7 +36,6 @@ public class VirtualMachine implements Runnable
 	public void processCurrentRequest(Request request)
 	{
 		//process request for some time
-
 		try 
 		{
 			Thread.sleep(Service.getInstance().getProccessTime());
@@ -55,7 +54,7 @@ public class VirtualMachine implements Runnable
 		Service service = Service.getInstance();
 		service.setInProcCount(service.getInProcCount()-1);
 		service.setProcessedCount(service.getProcessedCount() + 1);
-		System.out.println("size: "+ request.getVm().getVmQueue().size());
+
 		if(request.getVm().getVmQueue().isEmpty())
 		{
 			service.releaseVM(request.getVm());

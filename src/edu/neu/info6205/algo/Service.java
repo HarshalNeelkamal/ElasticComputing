@@ -10,7 +10,7 @@ public class Service
 	private int processedCount = 0;
 	private int serversInProccess = 0;
 	private int proccessTime = 0;
-	private long AvgProccessTimeStorage = 0;//holds a total time of previous 100 requests that got proccessed 
+	private long AvgProccessTimeStorage = 0; //holds a total time of previous 100 requests that got proccessed 
 	private long AvgProccessTime = 0;
 	
 	private Service() 
@@ -19,6 +19,11 @@ public class Service
 			{
 				machines[i] = new VirtualMachine();
 			}
+	}
+	
+	public void clearService()
+	{
+		service = null;
 	}
 	
 	public static Service getInstance() 
@@ -79,6 +84,12 @@ public class Service
 
 	public int getInProcCount() 
 	{
+		inProcCount = 0;
+		for (int i = 0; i < machines.length; i++)
+		{
+			inProcCount += machines[i].getVmQueue().size();
+		}
+		
 		return inProcCount;
 	}
 
@@ -101,8 +112,7 @@ public class Service
 	{
 		if(!machines[0].isEmployed())
 		{
-			System.out.println(">>>>>>>>>>first machine employed");
-			inProcCount++;
+			//inProcCount++;
 			employVM(machines[0]);
 			threads[0] = new Thread(machines[0]);
 			threads[0].start();
@@ -110,7 +120,7 @@ public class Service
 		}
 		else if(!(machines[0].getVmQueue()).isFull())
 		{
-			inProcCount++;
+			//inProcCount++;
 			return machines[0];
 		}
 		for(int i = 1; i < machines.length; i++)
@@ -119,14 +129,13 @@ public class Service
 				{
 					if(!((machines[i].getVmQueue()).isFull()))
 					{
-						inProcCount++;
+						//inProcCount++;
 						return machines[i];
 					}
 				}
 			else 
 				{
-					System.out.println(">>>>>>>>>>new machine employed");
-					inProcCount++;
+					//inProcCount++;
 					employVM(machines[i]);
 					threads[i] = new Thread(machines[i]);
 					threads[i].start();
@@ -143,8 +152,10 @@ public class Service
 		serversInProccess++;
 	}
 	
-	public void cleareQueues(){
-		for(int i= 0; i<machines.length;i++){
+	public void cleareQueues()
+	{
+		for(int i= 0; i<machines.length;i++)
+		{
 			VirtualMachine m = machines[i];
 			m.getVmQueue().cleare();
 			m = null;

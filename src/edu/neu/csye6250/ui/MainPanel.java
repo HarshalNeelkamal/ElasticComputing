@@ -1,17 +1,12 @@
 package edu.neu.csye6250.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Label;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class mainPanelImplementation 
+public class MainPanel 
 {
 
 	JPanel panel = new JPanel(new GridLayout(5, 2));
@@ -19,7 +14,7 @@ public class mainPanelImplementation
 	JLabel serverCountLabel = new JLabel(" No of Servers in Use: N/A");
 	JLabel server1Processing = new JLabel("Requests at Server 1: N/A");
 
-	JLabel requestsQueueLabel = new JLabel(" No of requests in Queue: N/A");
+	JLabel requestsQueueLabel = new JLabel(" No of requests in Dispatcher Queue: N/A");
 	JLabel server2Processing = new JLabel("Requests at Server 2: N/A");
 
 	JLabel totalDisapatchesLabel = new JLabel(" No of requests in Proccess: N/A");
@@ -32,7 +27,7 @@ public class mainPanelImplementation
 	JLabel server5Processing = new JLabel("Requests at Server 5: N/A");
 	
 	
-	public mainPanelImplementation()
+	public MainPanel()
 	{
 		panel.setBackground(Color.WHITE);
 		panel.add(serverCountLabel);
@@ -52,9 +47,10 @@ public class mainPanelImplementation
 	}
 	
 
-	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq, long avgProcTime, int[] serverSizes){
+	public void updateDetails(int serCount, int QueueCount, int reqInProc, int procReq, long avgProcTime, int[] serverSizes)
+	{
 		serverCountLabel.setText(" No of Servers in Use: "+ serCount+"/5");
-		requestsQueueLabel.setText(" No of requests in Queue: "+ QueueCount);
+		requestsQueueLabel.setText(" No of requests in Dispatcher Queue: "+ QueueCount);
 		totalDisapatchesLabel.setText(" No of requests in Proccess: "+ reqInProc);
 		totalProcessedLabel.setText(" Processed Requests: "+ procReq);
 		avgProcTimeLabel.setText(" Avg Processing Time: "+ avgProcTime);
